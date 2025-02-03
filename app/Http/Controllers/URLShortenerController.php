@@ -26,9 +26,9 @@ class URLShortenerController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      */
-    public function redirect(string $short_url) {
+    public function redirect(string $code) {
         try {
-            return redirect($this->urlShortenerService->decode($short_url));
+            return redirect($this->urlShortenerService->decode($code));
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -62,10 +62,10 @@ class URLShortenerController extends Controller
      */
     public function decode(DecodeRequest $request) {
         try {
-            $short_url = $request->short_url;
+            $code = $request->code;
             
             return response()->json([
-                "url" => $this->urlShortenerService->decode($short_url)
+                "url" => $this->urlShortenerService->decode($code)
             ], Response::HTTP_OK);
         } catch (Exception $e) {
             return response()->json([

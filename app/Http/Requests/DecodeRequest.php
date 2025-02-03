@@ -27,12 +27,12 @@ class DecodeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'short_url' => [
+            'code' => [
                 'required', 
                 'string',
                 function ($attribute, $value, $fail) {
                     if (!Cache::has($value)) {
-                        $fail('Short URL not found');
+                        $fail('code not found');
                     }
                 }
             ]
@@ -57,7 +57,7 @@ class DecodeRequest extends FormRequest
         
         foreach ($errors->messages() as $messages) {
             foreach ($messages as $message) {
-                if (str_contains($message, 'Short URL not found')) {
+                if (str_contains($message, 'code not found')) {
                     $isValidUrl = true;
                     break 2;
                 }

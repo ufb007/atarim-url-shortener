@@ -14,10 +14,10 @@ class URLShortenerService
      * @return string The shortened URL.
      */
     public function encode(string $url): string {
-        $shortUrl = Str::random(6);
-        $shortenedUrl = config('app.url') . '/' . $shortUrl;
+        $code = Str::random(6);
+        $shortenedUrl = config('app.url') . '/' . $code;
 
-        Cache::put($shortUrl, $url);
+        Cache::put($code, $url);
 
         return $shortenedUrl;
     }
@@ -28,7 +28,7 @@ class URLShortenerService
      * @param string $shortUrl The shortened URL to be decoded.
      * @return string The original URL associated with the shortened URL.
      */
-    public function decode(string $shortUrl): string {
-        return Cache::get($shortUrl);
+    public function decode(string $code): string {
+        return Cache::get($code);
     }
 }
