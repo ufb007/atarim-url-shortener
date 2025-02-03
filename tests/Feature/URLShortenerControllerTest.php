@@ -10,13 +10,6 @@ use Tests\TestCase;
 
 class URLShortenerControllerTest extends TestCase
 {
-    protected string $url = 'https://example.com';
-    protected string $baseUrl;
-    protected string $apiEndpoint = '/api/v1/';
-    protected string $code;
-    protected $postEncodeResponse;
-    protected string $shortUrl;
-
     public function setUp(): void
     {
         parent::setUp();

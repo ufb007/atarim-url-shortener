@@ -8,11 +8,6 @@ use Tests\TestCase;
 
 class URLShortenerServiceTest extends TestCase
 {
-    protected $urlShortenerService;
-    protected $url = 'https://example.com';
-    protected $shortUrl;
-    protected $code;
-
     // Set up the dependencies in the setUp method
     public function setUp(): void
     {
@@ -20,16 +15,9 @@ class URLShortenerServiceTest extends TestCase
 
         Cache::spy();
 
-        // Manually instantiate the service or get it from the container
-        $this->urlShortenerService = new URLShortenerService();
-
         $this->shortUrl = $this->urlShortenerService->encode($this->url);
 
         $this->code = substr($this->shortUrl, -6);
-
-        Cache::shouldHaveReceived('put')
-            ->once()
-            ->with($this->code, $this->url);
     }
 
     /**
@@ -42,7 +30,9 @@ class URLShortenerServiceTest extends TestCase
      */
     public function test_encode_url_returns_shortened_url(): void
     {
-        Cache::spy();
+        Cache::shouldHaveReceived('put')
+            ->once()
+            ->with($this->code, $this->url);
 
         Cache::shouldReceive('has')
             ->once()
@@ -63,8 +53,6 @@ class URLShortenerServiceTest extends TestCase
      */
     public function test_decode_short_url_returns_original_url(): void
     {
-        Cache::spy();
-
         Cache::shouldReceive('get')
             ->with($this->code)
             ->once()
