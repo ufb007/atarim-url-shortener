@@ -57,7 +57,7 @@ class URLShortenerControllerTest extends TestCase
     {
         Cache::shouldReceive('has')
             ->with($this->code)
-            ->once()
+            ->twice()
             ->andReturn(true);
 
         Cache::shouldReceive('get')
@@ -111,6 +111,11 @@ class URLShortenerControllerTest extends TestCase
      */
     public function test_url_redirect_to_original_url(): void
     {
+        Cache::shouldReceive('has')
+            ->with($this->code)
+            ->once()
+            ->andReturn(true);
+
         Cache::shouldReceive('get')
             ->with($this->code)
             ->once()

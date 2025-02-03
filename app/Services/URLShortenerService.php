@@ -29,6 +29,10 @@ class URLShortenerService
      * @return string The original URL associated with the shortened URL.
      */
     public function decode(string $code): string {
+        if (!Cache::has($code)) {
+            throw new \Exception('Code not found');
+        }
+
         return Cache::get($code);
     }
 }

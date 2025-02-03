@@ -29,8 +29,10 @@ class URLShortenerController extends Controller
     public function redirect(string $code) {
         try {
             return redirect($this->urlShortenerService->decode($code));
-        } catch (\Throwable $th) {
-            throw $th;
+        } catch (Exception $e) {
+            return response()->json([
+                "error" => $e->getMessage()
+            ]);
         }
     }
 

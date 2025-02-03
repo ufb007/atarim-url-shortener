@@ -53,6 +53,11 @@ class URLShortenerServiceTest extends TestCase
      */
     public function test_decode_short_url_returns_original_url(): void
     {
+        Cache::shouldReceive('has')
+            ->with($this->code)
+            ->once()
+            ->andReturn(true);
+
         Cache::shouldReceive('get')
             ->with($this->code)
             ->once()
